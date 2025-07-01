@@ -1,26 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ✅ NETLIFY OPTIMIERUNG: Build-Fehler nicht mehr ignorieren
-  // Entfernt: eslint.ignoreDuringBuilds und typescript.ignoreBuildErrors
-  // Grund: Netlify braucht saubere Builds für optimale Performance
+  // ✅ NETLIFY STATIC EXPORT: Für optimales Deployment ohne Server
+  // Grund: Statischer Export verhindert "Page not found" Fehler
+  output: 'export',
+  trailingSlash: true,
   
-  // ✅ NETLIFY IMAGE CDN: Aktiviert automatische Bildoptimierung
-  // Entfernt: images.unoptimized = true
-  // Grund: Netlify Image CDN bietet bessere Performance als unoptimierte Bilder
+  // ✅ NETLIFY STATIC COMPATIBILITY: Bilder für statischen Export optimiert
+  // Grund: Statischer Export benötigt unoptimierte Bilder
   images: {
-    // Externe Domains können hier hinzugefügt werden falls nötig
-    domains: [],
-    // Netlify Image CDN wird automatisch verwendet
+    unoptimized: true
   },
   
-  // ✅ NETLIFY DEPLOYMENT: Optimiert für Netlify's OpenNext Adapter
-  // Standalone Output für bessere Performance (optional)
-  output: 'standalone',
-  
-  // ✅ NETLIFY COMPATIBILITY: Experimentelle Features für bessere Netlify-Integration
+  // ✅ NETLIFY COMPATIBILITY: Korrigierte experimentelle Features
+  // Fix: serverComponentsExternalPackages → serverExternalPackages (Deprecation behoben)
   experimental: {
-    // Optimiert für Netlify's Edge Functions
-    serverComponentsExternalPackages: [],
+    serverExternalPackages: [],
   },
 }
 

@@ -5,24 +5,20 @@
   # ✅ NETLIFY BUILD: Standard Next.js Build-Command
   command = "npm run build"
   
-  # ✅ NETLIFY PUBLISH: Next.js App Router Output-Directory
-  # Netlify's OpenNext Adapter erkennt automatisch .next Ordner
-  publish = ".next"
+  # ✅ NETLIFY PUBLISH: Next.js Static Export Output-Directory
+  # Statischer Export erstellt 'out' Ordner statt '.next'
+  publish = "wareneingangskontrolle/out"
   
   # ✅ NETLIFY NODE VERSION: Kompatibel mit Next.js 15
   [build.environment]
     NODE_VERSION = "18"
-    # Optimiert für Netlify's Build-Performance
-    NPM_FLAGS = "--production=false"
 
-# ✅ NETLIFY REDIRECTS: SPA-Routing für Next.js App Router
-# Alle unbekannten Routen werden an Next.js weitergeleitet
+# ✅ NETLIFY REDIRECTS: SPA-Routing für statischen Export
+# Vereinfachte Redirects für bessere Kompatibilität
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  # Nur für statische Dateien, die nicht existieren
-  conditions = {Role = []}
 
 # ✅ NETLIFY HEADERS: Sicherheit und Performance-Optimierung
 [[headers]]
