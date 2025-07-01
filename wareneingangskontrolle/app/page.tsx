@@ -1,11 +1,12 @@
-"use client"
-import { Mail, FileText, Plus, Package, ClipboardList } from "lucide-react"
-import { useWareneingangForm } from "./hooks/useWareneingangForm"
-import { FormField } from "./components/FormField"
-import { ArtikelItem } from "./components/ArtikelItem"
-import { QuickReasonTags } from "./components/QuickReasonTags"
-import { lieferanten, artikel, einheiten } from "./data/constants"
-import { generateEmailContent, generateCSV, downloadCSV } from "./utils/export"
+"use client";
+
+import { Mail, FileText, Plus, Package, ClipboardList } from "lucide-react";
+import { useWareneingangForm } from "../hooks/useWareneingangForm";
+import { FormField } from "../components/FormField";
+import { ArtikelItem } from "../components/ArtikelItem";
+import { QuickReasonTags } from "../components/QuickReasonTags";
+import { lieferanten, artikel, einheiten } from "../data/constants";
+import { generateEmailContent, generateCSV, downloadCSV } from "../utils/export";
 
 export default function Wareneingangskontrolle() {
   const {
@@ -22,57 +23,57 @@ export default function Wareneingangskontrolle() {
     addArtikel,
     editArtikel,
     deleteArtikel,
-  } = useWareneingangForm()
+  } = useWareneingangForm();
 
   const handleReklamation = () => {
     if (!validateBasicForm()) {
-      alert("Bitte füllen Sie alle Grunddaten aus.")
-      return
+      alert("Bitte füllen Sie alle Grunddaten aus.");
+      return;
     }
 
     if (hinzugefuegteArtikel.length === 0) {
-      alert("Bitte fügen Sie mindestens einen Artikel hinzu.")
-      return
+      alert("Bitte fügen Sie mindestens einen Artikel hinzu.");
+      return;
     }
 
     try {
-      const { email, subject, body } = generateEmailContent(formData, hinzugefuegteArtikel)
-      const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-      window.location.href = mailtoLink
+      const { email, subject, body } = generateEmailContent(formData, hinzugefuegteArtikel);
+      const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Ein Fehler ist aufgetreten.")
+      alert(error instanceof Error ? error.message : "Ein Fehler ist aufgetreten.");
     }
-  }
+  };
 
   const handleProtokollSpeichern = () => {
     if (!validateBasicForm()) {
-      alert("Bitte füllen Sie alle Grunddaten aus.")
-      return
+      alert("Bitte füllen Sie alle Grunddaten aus.");
+      return;
     }
 
     if (hinzugefuegteArtikel.length === 0) {
-      alert("Bitte fügen Sie mindestens einen Artikel hinzu.")
-      return
+      alert("Bitte fügen Sie mindestens einen Artikel hinzu.");
+      return;
     }
 
-    const csvContent = generateCSV(formData, hinzugefuegteArtikel)
-    const today = new Date().toISOString().split("T")[0]
-    const filename = `Wareneingang_${today}_${formData.lieferscheinNr}.csv`
+    const csvContent = generateCSV(formData, hinzugefuegteArtikel);
+    const today = new Date().toISOString().split("T")[0];
+    const filename = `Wareneingang_${today}_${formData.lieferscheinNr}.csv`;
 
-    downloadCSV(csvContent, filename)
-  }
+    downloadCSV(csvContent, filename);
+  };
 
   const handleReasonSelect = (reason: string) => {
-    const currentValue = artikelData.bemerkung.trim()
+    const currentValue = artikelData.bemerkung.trim();
 
     if (currentValue === "") {
-      setArtikelData((prev) => ({ ...prev, bemerkung: reason }))
+      setArtikelData((prev) => ({ ...prev, bemerkung: reason }));
     } else {
       if (!currentValue.includes(reason)) {
-        setArtikelData((prev) => ({ ...prev, bemerkung: currentValue + "; " + reason }))
+        setArtikelData((prev) => ({ ...prev, bemerkung: currentValue + "; " + reason }));
       }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
@@ -99,8 +100,8 @@ export default function Wareneingangskontrolle() {
             <select
               value={formData.lieferant}
               onChange={(e) => {
-                setFormData((prev) => ({ ...prev, lieferant: e.target.value }))
-                validateField("lieferant", e.target.value)
+                setFormData((prev) => ({ ...prev, lieferant: e.target.value }));
+                validateField("lieferant", e.target.value);
               }}
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:border-indigo-500 focus:outline-none transition-colors"
             >
@@ -116,8 +117,8 @@ export default function Wareneingangskontrolle() {
           {formData.lieferant && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4 text-sm">
               {(() => {
-                const selectedLieferant = lieferanten.find((l) => l.name === formData.lieferant)
-                if (!selectedLieferant || !selectedLieferant.address) return null
+                const selectedLieferant = lieferanten.find((l) => l.name === formData.lieferant);
+                if (!selectedLieferant || !selectedLieferant.address) return null;
                 return (
                   <div className="space-y-1 text-blue-800">
                     <div>
@@ -139,7 +140,7 @@ export default function Wareneingangskontrolle() {
                       </div>
                     )}
                   </div>
-                )
+                );
               })()}
             </div>
           )}
@@ -149,8 +150,8 @@ export default function Wareneingangskontrolle() {
               type="text"
               value={formData.lieferscheinNr}
               onChange={(e) => {
-                setFormData((prev) => ({ ...prev, lieferscheinNr: e.target.value }))
-                validateField("lieferscheinNr", e.target.value)
+                setFormData((prev) => ({ ...prev, lieferscheinNr: e.target.value }));
+                validateField("lieferscheinNr", e.target.value);
               }}
               placeholder="Geben Sie die Lieferschein-Nummer ein"
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:border-indigo-500 focus:outline-none transition-colors"
@@ -211,8 +212,8 @@ export default function Wareneingangskontrolle() {
               <select
                 value={artikelData.artikel}
                 onChange={(e) => {
-                  setArtikelData((prev) => ({ ...prev, artikel: e.target.value }))
-                  validateField("artikel", e.target.value)
+                  setArtikelData((prev) => ({ ...prev, artikel: e.target.value }));
+                  validateField("artikel", e.target.value);
                 }}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:border-indigo-500 focus:outline-none transition-colors"
               >
@@ -234,8 +235,8 @@ export default function Wareneingangskontrolle() {
                 type="number"
                 value={artikelData.menge}
                 onChange={(e) => {
-                  setArtikelData((prev) => ({ ...prev, menge: e.target.value }))
-                  validateField("menge", e.target.value)
+                  setArtikelData((prev) => ({ ...prev, menge: e.target.value }));
+                  validateField("menge", e.target.value);
                 }}
                 min="0"
                 step="0.01"
@@ -248,8 +249,8 @@ export default function Wareneingangskontrolle() {
               <select
                 value={artikelData.einheit}
                 onChange={(e) => {
-                  setArtikelData((prev) => ({ ...prev, einheit: e.target.value }))
-                  validateField("einheit", e.target.value)
+                  setArtikelData((prev) => ({ ...prev, einheit: e.target.value }));
+                  validateField("einheit", e.target.value);
                 }}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:border-indigo-500 focus:outline-none transition-colors"
               >
@@ -303,7 +304,7 @@ export default function Wareneingangskontrolle() {
             <button
               onClick={handleProtokollSpeichern}
               disabled={hinzugefuegteArtikel.length === 0}
-              className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-4 rounded-xl font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed hover:from-green-600 hover:to-teal-700 transition-all transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-4 rounded-xl font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed hover:from-green-500 hover:to-teal-700 transition-all transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2"
             >
               <FileText size={18} />
               CSV-Protokoll speichern
@@ -317,5 +318,5 @@ export default function Wareneingangskontrolle() {
         </div>
       </div>
     </div>
-  )
+  );
 }
