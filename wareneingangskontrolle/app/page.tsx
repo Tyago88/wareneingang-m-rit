@@ -1,12 +1,15 @@
 "use client";
 
 import { Mail, FileText, Plus, Package, ClipboardList } from "lucide-react";
-import { useWareneingangForm } from "../hooks/useWareneingangForm";
-import { FormField } from "../components/FormField";
-import { ArtikelItem } from "../components/ArtikelItem";
-import { QuickReasonTags } from "../components/QuickReasonTags";
-import { lieferanten, artikel, einheiten } from "../data/constants";
-import { generateEmailContent, generateCSV, downloadCSV } from "../utils/export";
+// ✅ NETLIFY OPTIMIERUNG: Absolute Imports für bessere Build-Stabilität
+// Ersetzt relative "../" Pfade mit absoluten "@/" Pfaden
+// Grund: Verhindert Build-Fehler bei Netlify's OpenNext Adapter
+import { useWareneingangForm } from "@/hooks/useWareneingangForm";
+import { FormField } from "@/components/FormField";
+import { ArtikelItem } from "@/components/ArtikelItem";
+import { QuickReasonTags } from "@/components/QuickReasonTags";
+import { lieferanten, artikel, einheiten } from "@/data/constants";
+import { generateEmailContent, generateCSV, downloadCSV } from "@/utils/export";
 
 export default function Wareneingangskontrolle() {
   const {

@@ -1,5 +1,6 @@
-import type { FormData, Artikel } from "../types"
-import { lieferanten } from "../data/constants"
+// ✅ NETLIFY OPTIMIERUNG: Absolute Imports für bessere Build-Stabilität
+import type { FormData, Artikel } from "@/types"
+import { lieferanten } from "@/data/constants"
 
 export function generateEmailContent(formData: FormData, artikel: Artikel[]) {
   const lieferantData = lieferanten.find((l) => l.name === formData.lieferant)

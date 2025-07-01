@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import type { FormData, Artikel, ValidationErrors } from "../types"
-import { FIXED_ADDRESSES } from "../data/constants"
+// ✅ NETLIFY OPTIMIERUNG: Absolute Imports für bessere Build-Stabilität
+import type { FormData, Artikel, ValidationErrors } from "@/types"
+import { FIXED_ADDRESSES } from "@/data/constants"
 
 export function useWareneingangForm() {
   const [formData, setFormData] = useState<FormData>({
