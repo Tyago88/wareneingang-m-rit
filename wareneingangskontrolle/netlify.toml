@@ -7,7 +7,7 @@
   
   # ✅ NETLIFY PUBLISH: Next.js Static Export Output-Directory
   # Statischer Export erstellt 'out' Ordner statt '.next'
-  publish = "wareneingangskontrolle/out"
+  publish = "out"
   
   # ✅ NETLIFY NODE VERSION: Kompatibel mit Next.js 15
   [build.environment]
